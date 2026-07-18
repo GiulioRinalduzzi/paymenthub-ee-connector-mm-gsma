@@ -1,0 +1,19 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  Assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      # The runner default JDK is not 21; without this step the build fails on
+      # `sourceCompatibility = 21` with "invalid source release: 21".
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build project
+        run: ./gradlew clean build
+      - name: Build Docker image
+        run: docker build . -t paymenthubee.mifos.io/phee/paymenthub-ee-connector-mm-gsma

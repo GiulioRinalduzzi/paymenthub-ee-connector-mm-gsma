@@ -79,16 +79,13 @@ public class AccountRoutes extends RouteBuilder {
         from("direct:account-balance-handler").id("account-balance-handler").unmarshal()
                 .json(JsonLibrary.Jackson, AccountBalanceResponseDTO.class).process(exchange -> {
                     exchange.setProperty(ACCOUNT_RESPONSE, exchange.getIn().getBody(AccountBalanceResponseDTO.class).getCurrentBalance());
-                    // TODO: Add extra processing as per use case
                 });
 
         /**
          * Account status response handler
          */
-        from("direct:account-status-handler").id("account-status-handler")
-                // .unmarshal().json(JsonLibrary.Jackson, AccountStatusResponseDTO.class)
-                .log(LoggingLevel.INFO, "Inside account status handler").setProperty(PARTY_LOOKUP_FAILED, constant(false))
-                .process(accountResponseProcessor);
+        from("direct:account-status-handler").id("account-status-handler").log(LoggingLevel.INFO, "Inside account status handler")
+                .setProperty(PARTY_LOOKUP_FAILED, constant(false)).process(accountResponseProcessor);
 
         /**
          * Account name response handler
@@ -96,7 +93,6 @@ public class AccountRoutes extends RouteBuilder {
         from("direct:account-name-handler").id("account-name-handler").unmarshal().json(JsonLibrary.Jackson, AccountNameResponseDTO.class)
                 .process(exchange -> {
                     exchange.setProperty(ACCOUNT_RESPONSE, exchange.getIn().getBody(AccountNameResponseDTO.class).getName().getFullName());
-                    // TODO: Add extra processing as per use case
                 });
 
         /**
@@ -106,18 +102,13 @@ public class AccountRoutes extends RouteBuilder {
                 .setHeader("X-Date", simple(ZonedDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ISO_INSTANT)))
                 .setHeader("Authorization", simple("Bearer ${exchangeProperty." + ACCESS_TOKEN + "}"))
                 .toD(baseURL + account + "/${exchangeProperty." + IDENTIFIER_TYPE + "}/${exchangeProperty." + IDENTIFIER
-                        + "}/${exchangeProperty." + ACCOUNT_ACTION + "}?bridgeEndpoint=true&throwExceptionOnFailure=false"); // Bad
-                                                                                                                             // URL
+                        + "}/${exchangeProperty." + ACCOUNT_ACTION + "}?bridgeEndpoint=true&throwExceptionOnFailure=false");
 
         /**
-         * Base route for accounts TODO: Add support for multiple identifier lookup
+         * Base route for accounts
          */
         from("direct:account-route").id("account-route")
                 .log(LoggingLevel.INFO, "Getting ${exchangeProperty." + ACCOUNT_ACTION + "} for Identifier")
-                // .to("direct:get-access-token") //Get rid of this
-                // .process(exchange -> exchange.setProperty(ACCESS_TOKEN, accessTokenStore.getAccessToken()))
-                .log(LoggingLevel.INFO, "Got access token, moving on to API call.")
-                // .to("direct:get-account-details") // Bad API call
                 .log(LoggingLevel.INFO, "Completed ${exchangeProperty." + ACCOUNT_ACTION + "} ${body}").choice()
                 .when(exchange -> exchange.getProperty(IS_API_CALL, String.class).equals("true"))
                 .log(LoggingLevel.INFO, "Setting off API response").otherwise().choice()

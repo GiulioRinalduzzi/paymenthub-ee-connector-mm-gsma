@@ -38,7 +38,6 @@ public class AccountResponseProcessor implements Processor {
             variables.put(ERROR_INFORMATION, exchange.getIn().getBody(String.class));
             variables.put(PARTY_LOOKUP_FAILED, true);
         } else {
-            // TODO: Consult and Add partyLookupFspId
             variables.put(PARTY_LOOKUP_FAILED, false);
         }
 

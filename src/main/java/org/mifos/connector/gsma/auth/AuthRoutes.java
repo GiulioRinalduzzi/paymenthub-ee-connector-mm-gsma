@@ -42,7 +42,6 @@ public class AuthRoutes extends RouteBuilder {
         from("direct:access-token-error").id("access-token-error").unmarshal().json(JsonLibrary.Jackson, AuthErrorDTO.class)
                 .process(exchange -> {
                     logger.error(exchange.getIn().getBody(AuthErrorDTO.class).getErrorMessage());
-                    // TODO: Improve Error Handling
                 });
 
         /**

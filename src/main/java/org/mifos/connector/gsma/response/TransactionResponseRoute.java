@@ -90,7 +90,7 @@ public class TransactionResponseRoute extends RouteBuilder {
                 .toD(baseURL + "/${exchangeProperty." + RESPONSE_OBJECT_LINK + "}" + "?bridgeEndpoint=true&throwExceptionOnFailure=false");
 
         /**
-         * Error Handler Route for Transaction Response TODO: Improve based on use cases
+         * Error Handler Route for Transaction Response
          */
         from("direct:transaction-response-error").id("transaction-response-error")
                 .log(LoggingLevel.INFO, "Error in getting Transaction Response").setProperty(RESPONSE_OBJECT_AVAILABLE, constant(false));

@@ -40,10 +40,8 @@ public class ZeebeProcessStarter {
     public void startZeebeWorkflow(String workflowId, Map<String, Object> extraVariables) {
         Map<String, Object> variables = new HashMap<>();
         variables.putAll(extraVariables);
-        // TODO: Add extra variables if required. Such as origin date.
 
-        zeebeClient.newCreateInstanceCommand().bpmnProcessId(workflowId).latestVersion() // .version(1)
-                .variables(variables).send().join();
+        zeebeClient.newCreateInstanceCommand().bpmnProcessId(workflowId).latestVersion().variables(variables).send().join();
 
         logger.info("zeebee workflow instance from process {} started", workflowId);
     }

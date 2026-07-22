@@ -71,11 +71,7 @@ public class TransactionStateRoute extends RouteBuilder {
         /**
          * Base Route for Transaction State
          */
-        from("direct:transaction-state").id("transaction-state").log(LoggingLevel.INFO, "Transaction State route started")
-                // .to("direct:get-access-token")
-                // .process(exchange -> exchange.setProperty(ACCESS_TOKEN, accessTokenStore.getAccessToken()))
-                // .log(LoggingLevel.INFO, "Got access token, moving on.")
-                .choice()
+        from("direct:transaction-state").id("transaction-state").log(LoggingLevel.INFO, "Transaction State route started").choice()
                 .when(exchange -> correlationIDStore.isClientCorrelationPresent(exchange.getProperty(CORRELATION_ID, String.class)))
                 .log(LoggingLevel.INFO, "Getting Server Correlation ID").process(exchange -> {
                     Stream<String> serverCorrelations = correlationIDStore
@@ -104,7 +100,7 @@ public class TransactionStateRoute extends RouteBuilder {
                         + "?bridgeEndpoint=true&throwExceptionOnFailure=false");
 
         /**
-         * Error route handler TODO: Improve based on use cases
+         * Error route handler
          */
         from("direct:transaction-state-error").id("transaction-state-error").log(LoggingLevel.INFO, "Error in getting Transaction State")
                 .unmarshal().json(JsonLibrary.Jackson, ErrorDTO.class).process(exchange -> {

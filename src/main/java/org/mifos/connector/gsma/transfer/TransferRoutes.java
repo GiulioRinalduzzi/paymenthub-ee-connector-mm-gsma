@@ -59,9 +59,6 @@ public class TransferRoutes extends RouteBuilder {
          * Base route for transactions
          */
         from("direct:transfer-route").id("transfer-route").log(LoggingLevel.INFO, "Transfer route started")
-                // .to("direct:get-access-token")
-                // .process(exchange -> exchange.setProperty(ACCESS_TOKEN, accessTokenStore.getAccessToken()))
-                // .log(LoggingLevel.INFO, "Got access token, moving on")
                 .log(LoggingLevel.INFO, "Moving on to API call").to("direct:send-request-to-payee-route")
                 .log(LoggingLevel.INFO, "Status: ${header.CamelHttpResponseCode}")
                 .log(LoggingLevel.INFO, "Transaction API response: ${body}").to("direct:transaction-response-handler");
@@ -76,7 +73,7 @@ public class TransferRoutes extends RouteBuilder {
                             exchange.getProperty(CORRELATION_ID, String.class));
                     logger.info("Saved correlationId mapping");
                 }).otherwise().log(LoggingLevel.ERROR, "Transaction request unsuccessful").process(exchange -> {
-                    exchange.setProperty(TRANSACTION_ID, exchange.getProperty(CORRELATION_ID)); // TODO: Improve this
+                    exchange.setProperty(TRANSACTION_ID, exchange.getProperty(CORRELATION_ID));
                 }).setProperty(TRANSACTION_FAILED, constant(true)).process(transferResponseProcessor);
 
         /**
@@ -103,7 +100,6 @@ public class TransferRoutes extends RouteBuilder {
                 .process(transferResponseProcessor);
 
         from("direct:send-request-to-payee-route").removeHeader("*").setHeader(Exchange.HTTP_METHOD, constant("POST"))
-                // .setHeader("Platform-TenantId", simple("${exchangeProperty."+ RECEIVING_TENANT +"}"))
                 .setHeader("Content-Type", constant("application/json")).process(exchange -> {
                     exchange.getIn().setHeader("Platform-TenantId", exchange.getProperty("payeeTenantId"));
                     logger.info("Tenant ID: {}", exchange.getProperty("payeeTenantId"));

@@ -55,11 +55,10 @@ public class DebitMandateRoute extends RouteBuilder {
          */
         from("direct:debit-mandate-base").id("debit-mandate-base").log(LoggingLevel.INFO, "Debit Mandate route started")
                 .to("direct:get-access-token").process(exchange -> exchange.setProperty(ACCESS_TOKEN, accessTokenStore.getAccessToken()))
-                .log(LoggingLevel.INFO, "Got access token, moving on.")
-                // TODO: Create request body
-                .to("direct:create-debit-mandate").log(LoggingLevel.INFO, "Debit Mandate Response: ${body}").choice()
-                .when(header("CamelHttpResponseCode").isEqualTo("201")).log(LoggingLevel.INFO, "Mandate creation request successful")
-                .unmarshal().json(JsonLibrary.Jackson, DebitMandateDTO.class).process(exchange -> {
+                .log(LoggingLevel.INFO, "Got access token, moving on.").to("direct:create-debit-mandate")
+                .log(LoggingLevel.INFO, "Debit Mandate Response: ${body}").choice().when(header("CamelHttpResponseCode").isEqualTo("201"))
+                .log(LoggingLevel.INFO, "Mandate creation request successful").unmarshal().json(JsonLibrary.Jackson, DebitMandateDTO.class)
+                .process(exchange -> {
                     exchange.setProperty(MANDATE_CREATE_FAILED, false);
                     exchange.setProperty(MANDATE_REFERENCE, exchange.getIn().getBody(DebitMandateDTO.class).getMandateReference());
                 }).otherwise().log(LoggingLevel.INFO, "Mandate creation failed").unmarshal().json(JsonLibrary.Jackson, ErrorDTO.class)

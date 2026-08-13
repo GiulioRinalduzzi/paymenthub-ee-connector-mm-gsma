@@ -119,9 +119,9 @@ public class AccountRoutes extends RouteBuilder {
         /**
          * Method to get account status
          */
-        from("rest:GET:/account/status/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Account Status")
+        from("rest:GET:/account/status/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Account Status")
                 .process(exchange -> {
-                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
                     exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
                     exchange.setProperty(IS_API_CALL, "true");
                     exchange.setProperty(ACCOUNT_ACTION, "status");
@@ -130,8 +130,8 @@ public class AccountRoutes extends RouteBuilder {
         /**
          * Method to get account name
          */
-        from("rest:GET:/account/name/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Account Name").process(exchange -> {
-            exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+        from("rest:GET:/account/name/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Account Name").process(exchange -> {
+            exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
             exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
             exchange.setProperty(IS_API_CALL, "true");
             exchange.setProperty(ACCOUNT_ACTION, "accountname");
@@ -140,9 +140,9 @@ public class AccountRoutes extends RouteBuilder {
         /**
          * Method to get account balance
          */
-        from("rest:GET:/account/balance/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Account Balance")
+        from("rest:GET:/account/balance/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Account Balance")
                 .process(exchange -> {
-                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
                     exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
                     exchange.setProperty(IS_API_CALL, "true");
                     exchange.setProperty(ACCOUNT_ACTION, "balance");
@@ -151,9 +151,9 @@ public class AccountRoutes extends RouteBuilder {
         /**
          * Method to get account statement
          */
-        from("rest:GET:/account/statements/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Account Statements")
+        from("rest:GET:/account/statements/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Account Statements")
                 .process(exchange -> {
-                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
                     exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
                     exchange.setProperty(IS_API_CALL, "true");
                     exchange.setProperty(ACCOUNT_ACTION, "statemententries");
@@ -162,9 +162,9 @@ public class AccountRoutes extends RouteBuilder {
         /**
          * Method to get account transactions
          */
-        from("rest:GET:/account/transactions/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Account Transactions")
+        from("rest:GET:/account/transactions/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Account Transactions")
                 .process(exchange -> {
-                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
                     exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
                     exchange.setProperty(IS_API_CALL, "true");
                     exchange.setProperty(ACCOUNT_ACTION, "transactions");

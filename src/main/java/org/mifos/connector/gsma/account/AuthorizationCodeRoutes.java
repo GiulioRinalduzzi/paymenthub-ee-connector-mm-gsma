@@ -73,9 +73,9 @@ public class AuthorizationCodeRoutes extends RouteBuilder {
         /**
          * API to get Authorization Code
          */
-        from("rest:GET:/account/authcode/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Authorization Code")
+        from("rest:GET:/account/authcode/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Authorization Code")
                 .process(exchange -> {
-                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
                     exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
                     exchange.setProperty(IS_API_CALL, "true");
                 }).to("direct:authorization-code-route");

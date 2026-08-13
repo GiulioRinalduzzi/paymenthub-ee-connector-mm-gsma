@@ -81,9 +81,9 @@ public class DebitMandateRoute extends RouteBuilder {
         /**
          * API to create debit mandate
          */
-        from("rest:POST:/account/debitmandate/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Creating Debit Mandate")
+        from("rest:POST:/account/debitmandate/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Creating Debit Mandate")
                 .process(exchange -> {
-                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
                     exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
 
                     TransactionChannelRequestDTO channelRequest = objectMapper.readValue(exchange.getIn().getBody(String.class),

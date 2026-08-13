@@ -166,8 +166,8 @@ public class BillsRoute extends RouteBuilder {
         /**
          * API to get bills for an account
          */
-        from("rest:GET:/account/bills/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Account Bills").process(exchange -> {
-            exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+        from("rest:GET:/account/bills/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Account Bills").process(exchange -> {
+            exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
             exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
             exchange.setProperty(BILLS_ACTION, "bills");
         }).to("direct:bills-route-base").setBody(exchange -> exchange.getProperty(BILLS, String.class));
@@ -175,9 +175,9 @@ public class BillsRoute extends RouteBuilder {
         /**
          * API to get bill companies associated with an account
          */
-        from("rest:GET:/account/billcompanies/{identifier_type}/{identifier}").log(LoggingLevel.INFO, "Getting Account Status")
+        from("rest:GET:/account/billcompanies/{identifierType}/{identifier}").log(LoggingLevel.INFO, "Getting Account Status")
                 .process(exchange -> {
-                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifier_type"));
+                    exchange.setProperty(IDENTIFIER_TYPE, exchange.getIn().getHeader("identifierType"));
                     exchange.setProperty(IDENTIFIER, exchange.getIn().getHeader("identifier"));
                     exchange.setProperty(BILLS_ACTION, "companies");
                 }).to("direct:bills-route-base").setBody(exchange -> exchange.getProperty(BILL_COMPANIES, String.class));

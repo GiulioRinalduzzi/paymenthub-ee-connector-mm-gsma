@@ -54,11 +54,6 @@ public class ZeebeeWorkers {
             client.newCompleteCommand(job.getKey()).send().join();
         }).name("payeeProcess").maxJobsActive(workerMaxJobs).open();
 
-        zeebeClient.newWorker().jobType("testerWorker").handler((client, job) -> {
-            logger.info("Job '{}' started from process '{}' with key {}", job.getType(), job.getBpmnProcessId(), job.getKey());
-            client.newCompleteCommand(job.getKey()).send().join();
-        }).name("testerWorker").maxJobsActive(workerMaxJobs).open();
-
         zeebeClient.newWorker().jobType("sendTimeoutChannel").handler((client, job) -> {
             logger.info("Job '{}' started from process '{}' with key {}", job.getType(), job.getBpmnProcessId(), job.getKey());
             logger.info("TRANSACTION TIMEOUT");

@@ -31,12 +31,12 @@ import org.mifos.connector.common.gsma.dto.LinksDTO;
 import org.mifos.connector.common.gsma.dto.RequestStateDTO;
 import org.mifos.connector.common.mojaloop.dto.PartyIdInfo;
 import org.mifos.connector.gsma.auth.AccessTokenStore;
+import org.mifos.connector.gsma.config.ConnectorCamelProperties;
 import org.mifos.connector.gsma.config.GsmaProperties;
 import org.mifos.connector.gsma.transfer.CorrelationIDStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -56,16 +56,16 @@ public class LinksRoute extends RouteBuilder {
 
     private final String baseURL;
 
-    @Value("${camel.host}")
-    private String hostURL;
+    private final String hostURL;
 
     private final String account;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public LinksRoute(GsmaProperties gsmaProperties) {
+    public LinksRoute(GsmaProperties gsmaProperties, ConnectorCamelProperties camelProperties) {
         this.baseURL = gsmaProperties.getApi().getHost();
         this.account = gsmaProperties.getApi().getAccount();
+        this.hostURL = camelProperties.getHost();
     }
 
     @Override

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ZeebeeWorkers {
+public class ZeebeWorkers {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

@@ -21,6 +21,7 @@ import org.mifos.connector.common.gsma.dto.ErrorDTO;
 import org.mifos.connector.common.gsma.dto.GSMATransaction;
 import org.mifos.connector.common.gsma.dto.QuotesDTO;
 import org.mifos.connector.gsma.auth.AccessTokenStore;
+import org.mifos.connector.gsma.config.GsmaProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,7 @@ public class QuotesRoute extends RouteBuilder {
     @Autowired
     private DataTransformer dataTransformer;
 
-    @Value("${gsma.api.host}")
-    private String baseURL;
+    private final String baseURL;
 
     @Value("${camel.host}")
     private String hostURL;
@@ -49,6 +49,10 @@ public class QuotesRoute extends RouteBuilder {
     private QuoteResponseProcessor quoteResponseProcessor;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public QuotesRoute(GsmaProperties gsmaProperties) {
+        this.baseURL = gsmaProperties.getApi().getHost();
+    }
 
     @Override
     public void configure() {

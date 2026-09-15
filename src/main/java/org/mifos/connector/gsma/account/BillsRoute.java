@@ -28,6 +28,7 @@ import org.mifos.connector.common.gsma.dto.BillPaymentDTO;
 import org.mifos.connector.common.gsma.dto.ErrorDTO;
 import org.mifos.connector.common.gsma.dto.RequestStateDTO;
 import org.mifos.connector.gsma.auth.AccessTokenStore;
+import org.mifos.connector.gsma.config.GsmaProperties;
 import org.mifos.connector.gsma.transfer.CorrelationIDStore;
 import org.mifos.connector.gsma.transfer.TransferResponseProcessor;
 import org.slf4j.Logger;
@@ -48,11 +49,9 @@ public class BillsRoute extends RouteBuilder {
     @Autowired
     private AccessTokenStore accessTokenStore;
 
-    @Value("${gsma.api.host}")
-    private String baseURL;
+    private final String baseURL;
 
-    @Value("${gsma.api.account}")
-    private String account;
+    private final String account;
 
     @Value("${camel.host}")
     private String hostURL;
@@ -61,6 +60,11 @@ public class BillsRoute extends RouteBuilder {
     private TransferResponseProcessor transferResponseProcessor;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public BillsRoute(GsmaProperties gsmaProperties) {
+        this.baseURL = gsmaProperties.getApi().getHost();
+        this.account = gsmaProperties.getApi().getAccount();
+    }
 
     @Override
     public void configure() throws Exception {

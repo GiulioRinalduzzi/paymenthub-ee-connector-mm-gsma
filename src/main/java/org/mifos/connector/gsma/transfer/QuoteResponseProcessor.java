@@ -30,7 +30,7 @@ public class QuoteResponseProcessor implements Processor {
     private final int timeToLive;
 
     public QuoteResponseProcessor(ZeebeProperties zeebeProperties) {
-        this.timeToLive = zeebeProperties.getClient().getTtl();
+        this.timeToLive = zeebeProperties.client().ttl();
     }
 
     @Override

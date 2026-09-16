@@ -33,7 +33,7 @@ public class LinksResponseProcessor implements Processor {
     private final int timeToLive;
 
     public LinksResponseProcessor(ZeebeProperties zeebeProperties) {
-        this.timeToLive = zeebeProperties.getClient().getTtl();
+        this.timeToLive = zeebeProperties.client().ttl();
     }
 
     @Override

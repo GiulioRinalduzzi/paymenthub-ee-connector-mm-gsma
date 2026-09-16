@@ -51,9 +51,9 @@ public class TransferRoutes extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public TransferRoutes(GsmaProperties gsmaProperties, ConnectorCamelProperties camelProperties) {
-        this.baseURL = gsmaProperties.getApi().getHost();
-        this.channelURL = gsmaProperties.getApi().getChannel();
-        this.hostURL = camelProperties.getHost();
+        this.baseURL = gsmaProperties.api().host();
+        this.channelURL = gsmaProperties.api().channel();
+        this.hostURL = camelProperties.host();
     }
 
     @Override

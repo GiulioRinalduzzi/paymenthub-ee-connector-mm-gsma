@@ -50,8 +50,8 @@ public class QuotesRoute extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public QuotesRoute(GsmaProperties gsmaProperties, ConnectorCamelProperties camelProperties) {
-        this.baseURL = gsmaProperties.getApi().getHost();
-        this.hostURL = camelProperties.getHost();
+        this.baseURL = gsmaProperties.api().host();
+        this.hostURL = camelProperties.host();
     }
 
     @Override

@@ -30,7 +30,7 @@ public class TransferResponseProcessor implements Processor {
     private final int timeToLive;
 
     public TransferResponseProcessor(ZeebeProperties zeebeProperties) {
-        this.timeToLive = zeebeProperties.getClient().getTtl();
+        this.timeToLive = zeebeProperties.client().ttl();
     }
 
     @Override

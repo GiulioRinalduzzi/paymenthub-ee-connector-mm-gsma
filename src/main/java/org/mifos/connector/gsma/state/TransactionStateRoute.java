@@ -47,8 +47,8 @@ public class TransactionStateRoute extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public TransactionStateRoute(GsmaProperties gsmaProperties) {
-        this.baseURL = gsmaProperties.getApi().getHost();
-        this.channelURL = gsmaProperties.getApi().getChannel();
+        this.baseURL = gsmaProperties.api().host();
+        this.channelURL = gsmaProperties.api().channel();
     }
 
     @Override

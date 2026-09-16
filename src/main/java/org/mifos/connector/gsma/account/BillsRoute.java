@@ -61,9 +61,9 @@ public class BillsRoute extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public BillsRoute(GsmaProperties gsmaProperties, ConnectorCamelProperties camelProperties) {
-        this.baseURL = gsmaProperties.getApi().getHost();
-        this.account = gsmaProperties.getApi().getAccount();
-        this.hostURL = camelProperties.getHost();
+        this.baseURL = gsmaProperties.api().host();
+        this.account = gsmaProperties.api().account();
+        this.hostURL = camelProperties.host();
     }
 
     @Override

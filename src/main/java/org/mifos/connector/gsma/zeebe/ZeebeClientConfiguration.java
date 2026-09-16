@@ -13,8 +13,8 @@ public class ZeebeClientConfiguration {
     private final int zeebeClientMaxThreads;
 
     public ZeebeClientConfiguration(ZeebeProperties zeebeProperties) {
-        this.zeebeBrokerContactpoint = zeebeProperties.getBroker().getContactpoint();
-        this.zeebeClientMaxThreads = zeebeProperties.getClient().getMaxExecutionThreads();
+        this.zeebeBrokerContactpoint = zeebeProperties.broker().contactpoint();
+        this.zeebeClientMaxThreads = zeebeProperties.client().maxExecutionThreads();
     }
 
     @Bean

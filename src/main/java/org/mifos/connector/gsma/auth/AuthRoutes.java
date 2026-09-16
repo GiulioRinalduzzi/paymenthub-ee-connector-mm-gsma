@@ -31,9 +31,9 @@ public class AuthRoutes extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public AuthRoutes(GsmaProperties gsmaProperties) {
-        this.authUrl = gsmaProperties.getAuth().getHost();
-        this.clientKey = gsmaProperties.getAuth().getClientKey();
-        this.clientSecret = gsmaProperties.getAuth().getClientSecret();
+        this.authUrl = gsmaProperties.auth().host();
+        this.clientKey = gsmaProperties.auth().clientKey();
+        this.clientSecret = gsmaProperties.auth().clientSecret();
     }
 
     @Override

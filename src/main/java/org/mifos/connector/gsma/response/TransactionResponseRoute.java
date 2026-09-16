@@ -39,7 +39,7 @@ public class TransactionResponseRoute extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public TransactionResponseRoute(GsmaProperties gsmaProperties) {
-        this.baseURL = gsmaProperties.getApi().getHost();
+        this.baseURL = gsmaProperties.api().host();
     }
 
     @Override

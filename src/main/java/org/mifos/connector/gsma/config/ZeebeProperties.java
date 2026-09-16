@@ -1,6 +1,7 @@
 package org.mifos.connector.gsma.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 /**
  * How this connector reaches the Zeebe broker: {@code zeebe.broker.*} and {@code zeebe.client.*}.
@@ -10,72 +11,32 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * ({@code "#{...}"}) that only {@code @Value} evaluates, and some deployments override it with a plain number, so
  * moving it would either fail to start or quietly ignore the override. It stays on the worker classes that use it.
  * </p>
+ *
+ * @param broker
+ *            the broker to connect to, {@code zeebe.broker.*}
+ * @param client
+ *            client settings, {@code zeebe.client.*}
  */
 @ConfigurationProperties(prefix = "zeebe")
-public class ZeebeProperties {
-
-    private Broker broker = new Broker();
-
-    private Client client = new Client();
-
-    public Broker getBroker() {
-        return broker;
-    }
-
-    public void setBroker(Broker broker) {
-        this.broker = broker;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
+public record ZeebeProperties(@DefaultValue Broker broker, @DefaultValue Client client) {
 
     /**
      * The broker to connect to: {@code zeebe.broker.*}.
+     *
+     * @param contactpoint
+     *            gateway address, as {@code host:port}
      */
-    public static class Broker {
-
-        /** Gateway address, as {@code host:port}. */
-        private String contactpoint;
-
-        public String getContactpoint() {
-            return contactpoint;
-        }
-
-        public void setContactpoint(String contactpoint) {
-            this.contactpoint = contactpoint;
-        }
+    public record Broker(String contactpoint) {
     }
 
     /**
      * Client settings: {@code zeebe.client.*}.
+     *
+     * @param maxExecutionThreads
+     *            size of the job worker execution thread pool
+     * @param ttl
+     *            how long, in milliseconds, a published message stays available for correlation
      */
-    public static class Client {
-
-        /** Size of the job worker execution thread pool. */
-        private int maxExecutionThreads;
-
-        /** How long, in milliseconds, a published message stays available for correlation. */
-        private int ttl;
-
-        public int getMaxExecutionThreads() {
-            return maxExecutionThreads;
-        }
-
-        public void setMaxExecutionThreads(int maxExecutionThreads) {
-            this.maxExecutionThreads = maxExecutionThreads;
-        }
-
-        public int getTtl() {
-            return ttl;
-        }
-
-        public void setTtl(int ttl) {
-            this.ttl = ttl;
-        }
+    public record Client(@DefaultValue("100") int maxExecutionThreads, @DefaultValue("30000") int ttl) {
     }
 }

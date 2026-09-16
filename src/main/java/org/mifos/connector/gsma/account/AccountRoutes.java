@@ -50,8 +50,8 @@ public class AccountRoutes extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public AccountRoutes(GsmaProperties gsmaProperties) {
-        this.baseURL = gsmaProperties.getApi().getHost();
-        this.account = gsmaProperties.getApi().getAccount();
+        this.baseURL = gsmaProperties.api().host();
+        this.account = gsmaProperties.api().account();
     }
 
     @Override

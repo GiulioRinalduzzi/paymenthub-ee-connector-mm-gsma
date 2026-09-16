@@ -21,8 +21,8 @@ public class CamelContextConfig {
     private HttpClientConfigurerTrustAllCACerts httpClientConfigurerTrustAllCACerts;
 
     public CamelContextConfig(ConnectorCamelProperties camelProperties) {
-        this.serverPort = camelProperties.getServerPort();
-        this.disableSSL = camelProperties.isDisableSsl();
+        this.serverPort = camelProperties.serverPort();
+        this.disableSSL = camelProperties.disableSsl();
     }
 
     @Bean

@@ -28,7 +28,7 @@ public class AccountResponseProcessor implements Processor {
     private final int timeToLive;
 
     public AccountResponseProcessor(ZeebeProperties zeebeProperties) {
-        this.timeToLive = zeebeProperties.getClient().getTtl();
+        this.timeToLive = zeebeProperties.client().ttl();
     }
 
     @Override

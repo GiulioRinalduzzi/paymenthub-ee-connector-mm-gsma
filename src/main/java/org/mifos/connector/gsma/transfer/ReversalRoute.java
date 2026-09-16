@@ -41,7 +41,7 @@ public class ReversalRoute extends RouteBuilder {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public ReversalRoute(GsmaProperties gsmaProperties) {
-        this.baseURL = gsmaProperties.getApi().getHost();
+        this.baseURL = gsmaProperties.api().host();
     }
 
     @Override

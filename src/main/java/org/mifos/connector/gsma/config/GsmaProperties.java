@@ -9,7 +9,8 @@ import org.springframework.validation.annotation.Validated;
  * Everything this connector needs in order to talk to the GSMA Mobile Money API.
  *
  * <p>
- * The property names are the ones the deployment already sets as environment variables, so they must not be renamed.
+ * The property names are unchanged, because a deployment can set them as environment variables and a rename would break
+ * that silently.
  * </p>
  *
  * <p>

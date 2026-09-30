@@ -10,8 +10,9 @@ import org.springframework.validation.annotation.Validated;
  *
  * <p>
  * {@code zeebe.client.evenly-allocated-max-jobs} is deliberately not here. Its value is a Spring expression
- * ({@code "#{...}"}) that only {@code @Value} evaluates, and some deployments override it with a plain number, so
- * moving it would either fail to start or quietly ignore the override. It stays on the worker classes that use it.
+ * ({@code "#{...}"}) that only {@code @Value} evaluates, and a deployment could override it with a plain number, the
+ * way other connectors' application.yml set it, so moving it would either fail to start or quietly ignore such an
+ * override. It stays on the worker classes that use it.
  * </p>
  *
  * <p>

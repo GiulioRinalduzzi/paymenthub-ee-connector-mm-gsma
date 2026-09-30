@@ -10,8 +10,9 @@ import org.springframework.validation.annotation.Validated;
  *
  * <p>
  * Only these three keys are bound. Everything else under {@code camel.} belongs to camel-spring-boot and is left alone.
- * The names are unchanged because the deployment sets them as environment variables. All three are required, as they
- * were when they were bare {@code @Value} fields.
+ * The names are unchanged: the deployment sets {@code PORT}, which reaches {@code camel.server-port} through
+ * {@code ${PORT:5000}} in application.yml, and a rename would break that silently. All three are required, as they were
+ * when they were bare {@code @Value} fields.
  * </p>
  *
  * @param host

@@ -1,7 +1,9 @@
 package org.mifos.connector.gsma.config;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * How this connector reaches the Zeebe broker: {@code zeebe.broker.*} and {@code zeebe.client.*}.
@@ -12,13 +14,18 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  * moving it would either fail to start or quietly ignore the override. It stays on the worker classes that use it.
  * </p>
  *
+ * <p>
+ * Every value here is required, as it was when it was a bare {@code @Value} field.
+ * </p>
+ *
  * @param broker
  *            the broker to connect to, {@code zeebe.broker.*}
  * @param client
  *            client settings, {@code zeebe.client.*}
  */
+@Validated
 @ConfigurationProperties(prefix = "zeebe")
-public record ZeebeProperties(@DefaultValue Broker broker, @DefaultValue Client client) {
+public record ZeebeProperties(@NotNull @Valid Broker broker, @NotNull @Valid Client client) {
 
     /**
      * The broker to connect to: {@code zeebe.broker.*}.
@@ -26,7 +33,7 @@ public record ZeebeProperties(@DefaultValue Broker broker, @DefaultValue Client 
      * @param contactpoint
      *            gateway address, as {@code host:port}
      */
-    public record Broker(String contactpoint) {
+    public record Broker(@NotNull String contactpoint) {
     }
 
     /**
@@ -37,6 +44,6 @@ public record ZeebeProperties(@DefaultValue Broker broker, @DefaultValue Client 
      * @param ttl
      *            how long, in milliseconds, a published message stays available for correlation
      */
-    public record Client(@DefaultValue("100") int maxExecutionThreads, @DefaultValue("30000") int ttl) {
+    public record Client(@NotNull Integer maxExecutionThreads, @NotNull Integer ttl) {
     }
 }

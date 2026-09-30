@@ -1,7 +1,8 @@
 package org.mifos.connector.gsma.config;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * The {@code camel.*} settings this connector owns: the callback host it hands to the GSMA API, the port the Camel REST
@@ -9,7 +10,8 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  *
  * <p>
  * Only these three keys are bound. Everything else under {@code camel.} belongs to camel-spring-boot and is left alone.
- * The names are unchanged because the deployment sets them as environment variables.
+ * The names are unchanged because the deployment sets them as environment variables. All three are required, as they
+ * were when they were bare {@code @Value} fields.
  * </p>
  *
  * @param host
@@ -19,6 +21,7 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  * @param disableSsl
  *            when true, the https Camel component trusts any certificate
  */
+@Validated
 @ConfigurationProperties(prefix = "camel")
-public record ConnectorCamelProperties(String host, @DefaultValue("5000") int serverPort, @DefaultValue("false") boolean disableSsl) {
+public record ConnectorCamelProperties(@NotNull String host, @NotNull Integer serverPort, @NotNull Boolean disableSsl) {
 }

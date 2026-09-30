@@ -1,7 +1,9 @@
 package org.mifos.connector.gsma.config;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Everything this connector needs in order to talk to the GSMA Mobile Money API.
@@ -11,8 +13,9 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  * </p>
  *
  * <p>
- * {@code @DefaultValue} on the two groups matters: without it, deleting a whole section from the configuration leaves
- * the group null, and the first use of it is a NullPointerException that names nothing.
+ * Every value is required, as it was when it was a bare {@code @Value} field. {@code @Valid} carries the check into the
+ * two groups, so deleting a whole section stops startup with a message naming the property, instead of leaving the
+ * group null and failing later with a NullPointerException that names nothing.
  * </p>
  *
  * @param api
@@ -20,8 +23,9 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
  * @param auth
  *            the OAuth credentials used to fetch an access token, {@code gsma.auth.*}
  */
+@Validated
 @ConfigurationProperties(prefix = "gsma")
-public record GsmaProperties(@DefaultValue Api api, @DefaultValue Auth auth) {
+public record GsmaProperties(@NotNull @Valid Api api, @NotNull @Valid Auth auth) {
 
     /**
      * The GSMA Mobile Money API itself: {@code gsma.api.*}.
@@ -34,7 +38,7 @@ public record GsmaProperties(@DefaultValue Api api, @DefaultValue Auth auth) {
      * @param channel
      *            base URL of the channel connector this connector calls back into
      */
-    public record Api(String host, String account, String channel) {
+    public record Api(@NotNull String host, @NotNull String account, @NotNull String channel) {
     }
 
     /**
@@ -47,6 +51,6 @@ public record GsmaProperties(@DefaultValue Api api, @DefaultValue Auth auth) {
      * @param clientSecret
      *            OAuth client secret
      */
-    public record Auth(String host, String clientKey, String clientSecret) {
+    public record Auth(@NotNull String host, @NotNull String clientKey, @NotNull String clientSecret) {
     }
 }
